@@ -31,19 +31,19 @@
                             <input id="apellidos{{ user.id }}" name="apellidos" type="text" value="{{ user.apellidos }}" disabled>
                         </td>
                         <td>
-                            <input id="edad{{ user.id }}" name="edad" type="text" value="{{ user.edad }}" disabled>
+                            <input id="edad{{ user.id }}" name="edad" type="number" value="{{ user.edad }}" disabled>
                         </td>
                         <td>
                             <input id="fecha_nacimiento{{ user.id }}" name="fecha_nacimiento" type="email" value="{{ user.fecha_nacimiento }}" disabled>
                         </td>
                         <td>
-                            <input id="telefono{{ user.id }}" name="telefono" type="text" value="{{ user.telefono }}" disabled>
+                            <input id="telefono{{ user.id }}" name="telefono" type="number" value="{{ user.telefono }}" disabled>
                         </td>
                         <td>
-                            <input id="email{{ user.id }}" name="email" type="text" value="{{ user.email }}" disabled>
+                            <input id="email{{ user.id }}" name="email" type="email" value="{{ user.email }}" disabled>
                         </td>
                         <td>
-                            <input id="cant_visitas{{ user.id }}" name="cant_visitas" type="text" value="{{ user.cant_visitas }}" disabled>
+                            <input id="cant_visitas{{ user.id }}" name="cant_visitas" type="number" value="{{ user.cant_visitas }}" disabled>
                         </td>
                         <td class="actions">
                             <button onclick="editFunction(event, {{ user.id }})" class="editBtn" userId="{{ user.id }}" type="button"><i class="fas fa-edit"></i></button>

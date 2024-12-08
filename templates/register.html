@@ -5,7 +5,26 @@
 {{estado}}
 {% endif %}
 
-    <form method='POST'>
+    <script>
+        const sendForm = (event) => {
+            event.preventDefault();
+            const form = document.getElementById("registerUserForm");
+          
+            if (form.classList.contains("submitting")) {
+              return; // Evita enviar el formulario nuevamente
+            }
+            form.addEventListener("submit", () => {
+              // Simula un retraso para quitar la clase al completarse el envío
+              setTimeout(() => form.classList.remove("submitting"), 5000);
+            });
+            // Marcar el formulario como enviándose
+            form.classList.add("submitting");
+
+            // Se envía el formulario
+            form.submit();
+          };
+    </script>
+    <form id='registerUserForm' method='POST'>
         {% csrf_token %}
 
         <div class="name-container">
@@ -54,7 +73,7 @@ cant_visitas-->
             </div>
         </div>
 
-        <button type="submit">Ingresar</button>
+        <button onclick="sendForm(event)" >Ingresar</button>
     </form>
     
 {% endblock body %}
