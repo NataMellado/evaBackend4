@@ -59,6 +59,9 @@ def register(request):
 
 # Vista de la lista de usuarios
 def users_list(request):
+    
+    # Capturar los parámetros de la URL
+    query_params = request.GET.urlencode() 
         
     if request.method == 'POST': 
         try:
@@ -112,22 +115,37 @@ def users_list(request):
         except Exception as e:
             print(e)
             messages.error(request, 'Hubo un error!')
+            
+    # Construir la URL de la API con filtros si los hay
+    api_url = 'http://localhost:8001/api/pacientes/'
+    if query_params:
+        api_url += f'?{query_params}'
+        
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status() 
+        users_to_json = response.json()
+        users_data = []
 
-    users = requests.get('http://localhost:8001/api/pacientes/')
-    users_to_json = users.json()
-    users_data = []
-    print(users_to_json)
-    for paciente in users_to_json:
-        nuevo_usuario = User(
-            id = paciente['id'],
-            nombre = paciente['nombre'],
-            apellidos = paciente['apellidos'],
-            edad = paciente['edad'],
-            fecha_nacimiento = paciente['fecha_nacimiento'],
-            telefono = paciente['telefono'],
-            email = paciente['email'],
-            cant_visitas = paciente['cant_visitas'],
-        )
-        users_data.append(nuevo_usuario)
+        for paciente in users_to_json:
+            nuevo_usuario = User(
+                id = paciente['id'],
+                nombre = paciente['nombre'],
+                apellidos = paciente['apellidos'],
+                edad = paciente['edad'],
+                fecha_nacimiento = paciente['fecha_nacimiento'],
+                telefono = paciente['telefono'],
+                email = paciente['email'],
+                cant_visitas = paciente['cant_visitas'],
+            )
+            users_data.append(nuevo_usuario)
+            
+  
+    except requests.exceptions.RequestExeption as e:
+        print(f"Error al consultar la API: {e}")
+        messages.error(request, 'Hubo un error al consultar la lista de pacientes.')
+        users_data = []
+        users_to_json = []
+    
     print(users_data)
     return render(request, 'users_list.html', {'users': users_data, 'users_to_json': users_to_json})
