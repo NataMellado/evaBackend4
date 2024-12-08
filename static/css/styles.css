@@ -255,3 +255,18 @@ td.actions {
 .modal-body i {
   font-size: 3rem;
 }	
+
+/* Dropdown */
+.dropdown-custom {
+  background-color: var(--bright-blue); 
+  color: var(--white) !important;   
+  border: none !important;              
+}
+
+.dropdown-custom:focus,
+.dropdown-custom:hover {
+  background-color: var(--dark-blue);        
+}
+
+
+
