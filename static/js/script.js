@@ -44,8 +44,8 @@ const getUser = (userId) => {
  */
 const detectChanges = (userId) => {
   defaultData = getUser(userId);
-  console.log("default data!:")
-  console.log(defaultData)
+  // console.log("default data!:")
+  // console.log(defaultData)
   nombre = document.getElementById("nombre" + userId).value;
   apellidos = document.getElementById("apellidos" + userId).value;
   edad = document.getElementById("edad" + userId).value;
@@ -53,17 +53,17 @@ const detectChanges = (userId) => {
   telefono = document.getElementById("telefono" + userId).value;
   email = document.getElementById("email" + userId).value;
   cant_visitas = document.getElementById("cant_visitas" + userId).value;
-  console.log(
-    {
-      nombre,
-      apellidos,
-      edad,
-      fecha_nacimiento,
-      telefono,
-      email,
-      cant_visitas,
-    }
-  )
+  // console.log(
+  //   {
+  //     nombre,
+  //     apellidos,
+  //     edad,
+  //     fecha_nacimiento,
+  //     telefono,
+  //     email,
+  //     cant_visitas,
+  //   }
+  // )
   if (
     nombre !== defaultData.nombre ||
     apellidos !== defaultData.apellidos ||
@@ -242,6 +242,17 @@ const saveFunction = (event, userId) => {
  */
 const sendForm = (event, userId) => {
   event.preventDefault();
+  const form = document.getElementById("usersContainerForm" + userId);
+
+  if (form.classList.contains("submitting")) {
+    return; // Evita enviar el formulario nuevamente
+  }
+  form.addEventListener("submit", () => {
+    // Simula un retraso para quitar la clase al completarse el envío
+    setTimeout(() => form.classList.remove("submitting"), 5000);
+  });
+  // Marcar el formulario como enviándose
+  form.classList.add("submitting");
 
   // Crea el input hidden para enviar el userId en la request
   var hiddenInput = document.createElement("input");
@@ -255,7 +266,7 @@ const sendForm = (event, userId) => {
     .appendChild(hiddenInput);
 
   // Se envía el formulario
-  document.getElementById("usersContainerForm" + userId).submit();
+  form.submit();
 };
 
 /**
@@ -294,6 +305,19 @@ const saveUserForm = (event, userId) => {
  * Función que se llama al hacer click en el botón de eliminar un usuario ->
  */
 const deleteFunction = (userId) => {
+  const form = document.getElementById("usersContainerForm" + userId);
+
+  // Detectar si el formulario ya se está enviando
+  if (form.classList.contains("submitting")) {
+    return; // Evita enviar el formulario nuevamente
+  }
+
+  form.addEventListener("submit", () => {
+    // Simula un retraso para quitar la clase al completarse el envío
+    setTimeout(() => form.classList.remove("submitting"), 5000);
+  });
+  // Marcar el formulario como enviándose
+  form.classList.add("submitting");
   // Crea el input hidden para enviar el userId en la request
   var hiddenInput = document.createElement("input");
   hiddenInput.setAttribute("type", "hidden");
@@ -306,5 +330,6 @@ const deleteFunction = (userId) => {
     .appendChild(hiddenInput);
 
   // Se envía el formulario
-  document.getElementById("usersContainerForm" + userId).submit();
+  form.submit();
+  
 }

@@ -7,6 +7,20 @@ import json, requests
 def index(request):
     return render(request, 'index.html')
 
+def procesar_error(error):
+    print("Error:")
+    print(error)
+    errores_data = json.loads(error)
+    print(errores_data)
+    mensajes_error = []
+    for campo, errores in errores_data.items():
+        for error in errores:
+            mensajes_error.append(f"{campo.capitalize()}: {error}")
+
+    mensaje_final = "Error en campo(s):\n" + "\n".join(f"[{msj}]" for msj in mensajes_error)
+    print(mensaje_final)
+    return mensaje_final
+    
 # Vista de la página de registro
 def register(request):
     
@@ -30,13 +44,14 @@ def register(request):
             "cant_visitas":new_user_cant_visitas,
         })
         
-        if req.status_code != 200:
-            print("Error al guardar usuario")
-            messages.error(request, f'No se puede guardar este usuario. (Error en:{req.text})')
+        if req.status_code != 200 and req.status_code != 201 and req.status_code != 204:
+            print("Error al registrar paciente")
+            messages.error(request, f'No se puede registrar este paciente. ({procesar_error(req.text)})')
             return redirect('register')
+        else:
+            print("Paciente registrado")
+            messages.success(request, 'Paciente registrado exitosamente!')
         
-        print("Usuario registrado")
-        messages.success(request, 'Usuario registrado exitosamente!')
         redirect('users_list')
         
     
@@ -44,28 +59,21 @@ def register(request):
 
 # Vista de la lista de usuarios
 def users_list(request):
-    message = request.GET.get('message')
-    if message == 'error':
-        messages.error(request, 'No se puede guardar este usuario.')    
-    # return render(request, 'users_list.html')
         
     if request.method == 'POST': 
         try:
             eliminar = request.POST.get('deleteUser')
-            
                 
-            if eliminar:
-                user = User.objects.get(id=eliminar)
+            if eliminar:        
                 req = requests.delete(f'http://localhost:8001/api/pacientes/{eliminar}/')
         
-                if req.status_code != 200:
-                    print("Error al eliminar usuario")
-                    messages.error(request, f'No se puede eliminar este usuario. (Error en:{req.text})')
-                
-                print("Usuario eliminado")
-                messages.success(request, 'Usuario eliminado exitosamente!')
+                if req.status_code != 200 and req.status_code != 201 and req.status_code != 204:
+                    print("Error al eliminar paciente")
+                    messages.error(request, f'No se puede eliminar este paciente. ({procesar_error(req.text)})')
+                else:
+                    print("Paciente eliminado")
+                    messages.success(request, 'Paciente eliminado exitosamente!')
             else:
-            
                 new_user_id = request.POST.get('userId')
                 new_user_nombre = request.POST.get('nombre')
                 new_user_apellidos = request.POST.get('apellidos')
@@ -84,16 +92,22 @@ def users_list(request):
                 print(new_user_email)
                 print(new_user_cant_visitas)
                 
-                user = User.objects.get(id=new_user_id)
-                user.nombre = new_user_nombre
-                user.apellidos = new_user_apellidos
-                user.edad = new_user_edad
-                user.fecha_nacimiento = new_user_fecha_nacimiento
-                user.telefono = new_user_telefono
-                user.email = new_user_email
-                user.cant_visitas = new_user_cant_visitas
-                user.save()
-                messages.success(request, 'Usuario modificado exitosamente!')
+                req = requests.put(f'http://localhost:8001/api/pacientes/{new_user_id}/', data = {
+                    "nombre":new_user_nombre,
+                    "apellidos":new_user_apellidos,
+                    "edad":new_user_edad,
+                    "fecha_nacimiento":new_user_fecha_nacimiento,
+                    "telefono":new_user_telefono,
+                    "email":new_user_email,
+                    "cant_visitas":new_user_cant_visitas,
+                })
+        
+                if req.status_code != 200 and req.status_code != 201 and req.status_code != 204:
+                    print("Error al modificar paciente")
+                    messages.error(request, f'No se puede modificar este paciente. ({procesar_error(req.text)})')
+                else:
+                    print("Paciente modificado")
+                    messages.success(request, 'Paciente modificado exitosamente!')
         
         except Exception as e:
             print(e)
