@@ -258,15 +258,13 @@ td.actions {
 
 /* Dropdown */
 .dropdown-custom {
-  background-color: var(--bright-blue); 
+  background-color: var(--bright-blue) !important; 
   color: var(--white) !important;   
   border: none !important;              
 }
 
-.dropdown-custom:focus,
-.dropdown-custom:hover {
-  background-color: var(--dark-blue);        
+.dropdown-menu {
+  --bs-dropdown-link-active-bg: var(--pale-blue);
+  --bs-dropdown-link-active-color: var(--dark-gray);
 }
-
-
 
