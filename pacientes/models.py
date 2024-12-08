@@ -8,5 +8,3 @@ class Paciente(models.Model):
     telefono = models.CharField(max_length=10)
     email = models.EmailField()
     cant_visitas = models.IntegerField()
-    
-    
