@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block title %}Registrar usuario{% endblock title %}
+{% block body %}
+{% if estado %}
+{{estado}}
+{% endif %}
+
+    <form method='POST'>
+        {% csrf_token %}
+
+        <div class="name-container">
+<!--nombre
+apellidos
+edad
+fecha_nacimiento
+telefono
+email
+cant_visitas-->
+            <div class="input-container">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" required>
+            </div>
+
+            <div class="input-container">
+                <label for="apellidos">Apellidos</label>
+                <input type="text" name="apellidos" id="apellidos" required>
+            </div>
+        </div>
+
+        <div class="input-container" >
+            <label for="edad">Edad</label>
+            <input type="number" name="edad" id="edad" required>
+        </div>
+
+        <div class="input-container" >
+            <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" required>
+        </div>
+
+        <div class="input-container">
+            <label for="telefono">Teléfono</label>
+            <input type="number" name="telefono" id="telefono" required>
+        </div>
+
+        <div class="contact-container">
+
+            <div class="input-container">
+                <label for="email">Correo electrónico</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div class="input-container">
+                <label for="cant_visitas">Cantidad de Visitas</label>
+                <input type="number" name="cant_visitas" id="cant_visitas" required>
+            </div>
+        </div>
+
+        <button type="submit">Ingresar</button>
+    </form>
+    
+{% endblock body %}

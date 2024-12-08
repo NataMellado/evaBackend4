@@ -1,0 +1,257 @@
+@import url('variables.css');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    min-height: 100dvh;
+    color: var(--dark-gray);
+    font-family: 'League Spartan', sans-serif !important;
+    background-color: var(--pale-blue);
+}
+
+
+
+/* header */
+header {
+  background-color: var(--white);
+  color: white;
+  padding: 2.5rem 1.5rem;
+  border-radius: 0 var(--br-m) var(--br-m) 0 ;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+header .logo {
+  color: var(--bright-blue);
+  margin-bottom: 3rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+nav a {
+  list-style: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--br-m);
+  transition: background-color 0.4s;
+  color: var(--gray);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+nav a.active {
+  background-color: var(--pale-blue);
+  border-radius: var(--br-m);
+  color: var(--bright-blue);
+}
+
+nav a.active {
+  color: var(--bright-blue);
+}
+
+nav a:hover {
+  background-color: var(--pale-blue);
+  border-radius: var(--br-m);
+  color: var(--bright-blue);
+}
+
+nav a i {
+  color: var(--gray);
+  margin-right: 8px;
+}
+
+
+
+
+/* main */
+main {
+  flex-grow: 1;
+  padding: 3rem;
+}
+
+main h1 {
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+
+/* form */
+form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--br-s);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+form .name-container,
+form .contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+form .input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+form input {
+  padding: 0.5rem;
+  border: 1px solid var(--light-gray);
+  border-radius: 4px;
+  background-color: var(--white);
+}
+
+input:not(:disabled) {
+  border: 1px solid var(--light-gray);
+  border-radius: var(--br-s);
+}
+
+input:not(:disabled):focus {
+  outline: 1px solid var(--bright-blue);
+}
+
+input:disabled{
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+form input:focus {
+  outline: 1px solid var(--bright-blue);
+}
+
+form button {
+  padding: 0.6rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: var(--br-s)!important;
+  background-color: var(--bright-blue);
+  color: var(--white);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
+
+form button:hover {
+  background-color: var(--dark-blue);
+
+}
+
+/* doctor table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background-color: var(--white);
+  border-radius: var(--br-s);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+table th, table td {
+  padding: 1rem;
+  border: none;
+  text-align: left;
+}
+
+table th {
+  background-color: var(--bright-blue);
+  color: var(--white);
+  font-weight: 600;
+}
+
+table td {
+  background-color: var(--white);
+}
+
+table input {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  background-color: var(--white);
+  white-space: nowrap;
+}	
+
+table button {
+  padding: 0.6rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: var(--white);
+  color: var(--bright-blue);
+  cursor: pointer;
+
+}
+
+td.actions {
+  display: flex;
+  white-space: nowrap;
+}
+
+.message-box-error {
+  margin-top: 100%;
+  display: flex;
+  justify-content: center;
+  border: 1px solid var(--error-red);
+}
+
+.message-box-success {
+  margin-top: 100%;
+  display: flex;
+  justify-content: center;
+  border: 1px solid var(--success-green);
+  max-width: 80%;
+  text-wrap: wrap;
+}
+
+.message-text {
+  /* que se separe hasta el fondo del contenedor */
+  padding: 1rem;
+  border-radius: var(--br-s);
+  background-color: var(--white);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  color:black;
+  font: 1rem;
+}
+
+/* Modal */
+
+.modal-header,
+.modal-footer {
+  border: none !important;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+
+.modal-body i {
+  font-size: 3rem;
+}	

@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block title %}Lista de Pacientes{% endblock title %}
+{% block body %}
+    <script>
+        var personas = {{ users_to_json|safe }};
+    </script>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Edad</th>
+                <th>Fecha Nacimiento</th>
+                <th>Telefono</th>
+                <th>Email</th>
+                <th>Visitas</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody id="formContainer">
+                {% for user in users %}
+                <form id="usersContainerForm{{user.id}}" method='POST'>
+                    {% csrf_token %}
+                    <tr userId="{{user.id}}">
+                        <td>
+                            <input id="nombre{{ user.id }}"  name="nombre" type="text" value="{{ user.nombre }}" disabled>
+                        </td>
+                        <td>
+                            <input id="apellidos{{ user.id }}" name="apellidos" type="text" value="{{ user.apellidos }}" disabled>
+                        </td>
+                        <td>
+                            <input id="edad{{ user.id }}" name="edad" type="text" value="{{ user.edad }}" disabled>
+                        </td>
+                        <td>
+                            <input id="fecha_nacimiento{{ user.id }}" name="fecha_nacimiento" type="email" value="{{ user.fecha_nacimiento }}" disabled>
+                        </td>
+                        <td>
+                            <input id="telefono{{ user.id }}" name="telefono" type="text" value="{{ user.telefono }}" disabled>
+                        </td>
+                        <td>
+                            <input id="email{{ user.id }}" name="email" type="text" value="{{ user.email }}" disabled>
+                        </td>
+                        <td>
+                            <input id="cant_visitas{{ user.id }}" name="cant_visitas" type="text" value="{{ user.cant_visitas }}" disabled>
+                        </td>
+                        <td class="actions">
+                            <button onclick="editFunction(event, {{ user.id }})" class="editBtn" userId="{{ user.id }}" type="button"><i class="fas fa-edit"></i></button>
+                            <button onclick="saveFunction(event, {{ user.id }})" class="saveBtn" userId="{{ user.id }}" type="button"><i class="fas fa-save"></i></button>
+                            <button onclick="deleteFunction({{ user.id }})" class="deleteBtn" userId="{{ user.id }}" type="button"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                </form>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock body %}

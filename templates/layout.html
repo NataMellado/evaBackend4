@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock title %}</title>
+    <script
+      src="https://kit.fontawesome.com/d85944cffc.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href='{% static "css/styles.css" %}?v={{ STATIC_VERSION5 }}'
+    />
+  </head>
+
+  <body>
+    <header>
+      <h1 class="logo">MEDICENTER</h1>
+      <nav>
+        <a
+          href="{% url 'index' %}"
+          class="{% if request.path == '/' %}active{% endif %}"
+          ><i class="fa-solid fa-house"></i>Inicio</a
+        >
+        <a
+          href="{% url 'register' %}"
+          class="{% if request.path == '/register/' %}active{% endif %}"
+          ><i class="fa-solid fa-user-plus"></i>Añadir pacientes</a
+        >
+        <a
+          href="{% url 'users_list' %}"
+          class="{% if request.path == '/users/' %}active{% endif %}"
+          ><i class="fa-solid fa-users"></i>Lista de pacientes</a
+        >
+
+        {% comment %} {% if messages %} {% for message in messages %} {% if
+        message.tags == 'error' %}
+        <ul class="message-box-error">
+          <li>
+            <h3 class="font-weight-light message-text">{{message}}</h3>
+          </li>
+        </ul>
+        {% endif %} {% if message.tags == 'success' %}
+        <ul class="message-box-success">
+          <li>
+            <h3 class="font-weight-light message-text">{{message}}</h3>
+          </li>
+        </ul>
+        {% endif %} {% endfor %} {% endif %} {% endcomment %} {% comment %}
+        <ul class="message-box-success">
+          <li>
+            <h3 class="font-weight-light message-text">
+              Usuario modificado exitosamente!
+            </h3>
+          </li>
+        </ul>
+        {% endcomment %}
+      </nav>
+    </header>
+
+    <main>{% block body %}{% endblock body %}</main>
+
+    <!-- Modal de bootstrap -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+            <div class="modal-body">
+                {% if messages %}
+                    {% for message in messages %}
+
+                        <i class="
+                            {% if message.tags == 'error' %}fa-solid fa-circle-xmark text-danger
+                            {% elif message.tags == 'success' %}fa-solid fa-circle-check text-success
+                            {% elif message.tags == 'warning' %}fa-solid fa-circle-exclamation text-warning
+                            {% endif %}"
+                        >
+                        </i>
+                        
+                        <div id="modalMessageContent">
+                            <p class="
+                                {% if message.tags == 'error' %}text-danger
+                                {% elif message.tags == 'success' %}text-success
+                                {% elif message.tags == 'warning' %}text-warning
+                                {% endif %}"
+                            >
+                                {{ message }}
+                            </p>
+                        </div>
+
+                    {% endfor %}
+                {% endif %}
+            </div>
+        
+          
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        {% if messages %}
+          var myModal = new bootstrap.Modal(document.getElementById('messageModal'));
+          myModal.show();
+        {% endif %}
+      });
+    </script>
+  </body>
+</html>
